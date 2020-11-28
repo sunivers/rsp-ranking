@@ -50,7 +50,7 @@ function RegisterPage(props) {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignContent: 'center',
+        alignItems: 'center',
         width: '100%',
         height: '100vh',
       }}
@@ -58,8 +58,6 @@ function RegisterPage(props) {
       <form
         style={{
           display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
           flexDirection: 'column',
         }}
         onSubmit={onSubmitHandler}

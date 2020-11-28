@@ -37,7 +37,7 @@ function LoginPage(props) {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignContent: 'center',
+        alignItems: 'center',
         width: '100%',
         height: '100vh',
       }}
@@ -45,8 +45,6 @@ function LoginPage(props) {
       <form
         style={{
           display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
           flexDirection: 'column',
         }}
         onSubmit={onSubmitHandler}
