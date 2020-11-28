@@ -36,7 +36,6 @@ function RegisterPage(props) {
     };
 
     dispatch(registerUser(data)).then((response) => {
-      console.log(response);
       if (response.payload.success) {
         alert('성공적으로 회원가입 되었습니다.');
         props.history.push('/login');

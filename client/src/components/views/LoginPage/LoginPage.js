@@ -23,7 +23,6 @@ function LoginPage(props) {
     };
 
     dispatch(loginUser(data)).then((response) => {
-      console.log(response);
       if (response.payload.success) {
         props.history.push('/');
       } else {

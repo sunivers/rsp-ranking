@@ -8,7 +8,6 @@ function LandingPage(props) {
 
   const onClickHandler = () => {
     axios.get('/api/users/logout').then((res) => {
-      console.log(res);
       if (res.data.success) {
         props.history.push('/login');
       } else {
