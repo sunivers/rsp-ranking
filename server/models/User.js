@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  participationCount: {
+    type: Number,
+    default: 0,
+  },
   point: {
     type: Number,
     default: 0,

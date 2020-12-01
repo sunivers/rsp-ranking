@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
+const { History } = require('./models/History');
 const { rspBatchJob } = require('./batch/rspBatchJob');
 
 // application/x-www-form-urlencoded
@@ -81,6 +82,16 @@ app.get('/api/users/logout', auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: '' }, (err, user) => {
     if (err) return res.json({ success: false, error: err });
     return res.status(200).send({ success: true });
+  });
+});
+
+app.get('/api/rsp/apply', (req, res) => {
+  const history = new History(req.body);
+  history.save((err, history) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.status(200).json({
+      success: true,
+    });
   });
 });
 

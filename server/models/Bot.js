@@ -10,7 +10,11 @@ const botSchema = mongoose.Schema({
     min: 0,
     max: 23,
   },
-  rsp: Number,
+  rsp: {
+    type: Number,
+    min: 0,
+    max: 2,
+  },
   timestamp: {
     type: Date,
     default: Date.now,
