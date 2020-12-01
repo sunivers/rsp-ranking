@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { auth } = require('./middleware/auth');
 const { User } = require('./models/User');
+const { rspBatchJob } = require('./batch/rspBatchJob');
 
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -82,6 +83,8 @@ app.get('/api/users/logout', auth, (req, res) => {
     return res.status(200).send({ success: true });
   });
 });
+
+rspBatchJob();
 
 const port = 5000;
 app.listen(port, () => {
