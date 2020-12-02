@@ -1,0 +1,40 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding: 5vw;
+}
+.home__header {
+  margin-bottom: 70px;
+  margin-top: -70px;
+  text-align: center;
+}
+.home__rsp {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+}
+.home__rsp input[type=radio] {
+  width: 0;
+}
+.home__rsp input[type=radio] + label {
+  display: inline-block;
+  padding: 3vw;
+}
+.home__rsp input[type=radio] + label:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.home__rsp input[type=radio]:checked + label {
+  border: 2px solid #1890ff;
+  border-radius: 3vw;
+}
+.home__img {
+  height: 25vw;
+  max-height: 150px;
+}

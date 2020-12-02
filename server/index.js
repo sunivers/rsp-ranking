@@ -85,7 +85,7 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
-app.get('/api/rsp/apply', (req, res) => {
+app.post('/api/rsp/apply', (req, res) => {
   const history = new History(req.body);
   history.save((err, history) => {
     if (err) return res.json({ success: false, error: err });
@@ -95,7 +95,7 @@ app.get('/api/rsp/apply', (req, res) => {
   });
 });
 
-rspBatchJob();
+// rspBatchJob();
 
 const port = 5000;
 app.listen(port, () => {
