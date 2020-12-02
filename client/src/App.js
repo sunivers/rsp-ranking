@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import LandingPage from './components/views/LandingPage/LandingPage';
-import LoginPage from './components/views/LoginPage/LoginPage';
-import RegisterPage from './components/views/RegisterPage/RegisterPage';
+import LandingPage from './components/views/LandingPage';
+import LoginPage from './components/views/LoginPage';
+import RegisterPage from './components/views/RegisterPage';
+import NavBar from './components/views/NavBar';
 import Auth from './hoc/auth';
 
 function App() {
   return (
     <Router>
       <div>
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+        <NavBar />
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route path="/login" component={Auth(LoginPage, false)} />
