@@ -7,7 +7,7 @@ import { Button } from 'antd';
 function Home(props) {
   const [rsp, setRsp] = useState(-1);
 
-  const hour = new Date().getHours() + 1;
+  const hour = new Date().getHours() + 1; // 다음 시간대 참여를 위해 +1 해준다.
   const rspText = ['가위', '바위', '보'];
   const onSubmitHandler = () => {
     if (rsp === -1) return alert('가위, 바위, 보 중 하나를 선택해주세요.');
@@ -17,7 +17,7 @@ function Home(props) {
     const data = {
       // userId: Email,
       rsp,
-      hour,
+      hour: hour === 24 ? 0 : hour, // hour => 0 - 23
     };
     axios.post('/api/rsp/apply', data).then((res) => {
       if (res.data.success) {
