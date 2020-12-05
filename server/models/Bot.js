@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const botSchema = mongoose.Schema({
   date: {
     type: String,
-    maxlength: 10,
   },
   hour: {
     type: Number,

@@ -5,6 +5,9 @@ const historySchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  date: {
+    type: String,
+  },
   rsp: {
     type: Number,
     min: 0,
