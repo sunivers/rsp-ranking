@@ -3,11 +3,12 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import './Home.css';
 import { Button } from 'antd';
+import { getFormattedToday, getCurrentHour } from '../../utils';
 
 function Home(props) {
   const [rsp, setRsp] = useState(-1);
 
-  const hour = new Date().getHours() + 1; // 다음 시간대 참여를 위해 +1 해준다.
+  const hour = getCurrentHour(1); // 다음 시간대 참여를 위해 +1 해준다.
   const rspText = ['가위', '바위', '보'];
   const onSubmitHandler = () => {
     if (rsp === -1) return alert('가위, 바위, 보 중 하나를 선택해주세요.');
@@ -15,8 +16,12 @@ function Home(props) {
     if (!window.confirm(`${rspText[rsp]}로 참여하시겠습니까?`)) return;
 
     const data = {
-      // userId: Email,
+      /**
+       * @todo 리덕스 auth 작업 이후 userId 추가하기
+       */
+      // userId,
       rsp,
+      date: getFormattedToday(),
       hour: hour === 24 ? 0 : hour, // hour => 0 - 23
     };
     axios.post('/api/rsp/apply', data).then((res) => {

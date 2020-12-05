@@ -2,7 +2,7 @@ const _padStart = require('lodash/padStart');
 
 const getFormattedToday = () => {
   const now = new Date();
-  return `${now.getFullYear()}-${_padStart((now.getMonth() + 1), 2, '0')}-${_padStart(now.getDay(), 2, '0')}`;
+  return `${now.getFullYear()}-${_padStart((now.getMonth() + 1), 2, '0')}-${_padStart(now.getDate(), 2, '0')}`;
 }
 
 const getCurrentHour = () => {
