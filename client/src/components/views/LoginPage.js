@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
+import { Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -17,6 +20,11 @@ function LoginPage(props) {
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
+    if (!Email || !Password) {
+      alert('이메일과 패스워드를 모두 입력해주세요.');
+      return;
+    }
 
     let data = {
       email: Email,
@@ -46,15 +54,20 @@ function LoginPage(props) {
         style={{
           display: 'flex',
           flexDirection: 'column',
+          width: '300px'
         }}
-        onSubmit={onSubmitHandler}
       >
-        <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler} />
-        <label>Password</label>
-        <input type="password" value={Password} onChange={onPasswordHandler} />
+        <Input type="email" value={Email} onChange={onEmailHandler} placeholder="이메일" size="large" prefix={<UserOutlined />} />
         <br />
-        <button>Login</button>
+        <Input type="password" value={Password} onChange={onPasswordHandler} placeholder="비밀번호" size="large" prefix={<LockOutlined />} />
+        <br />
+        <Button onClick={onSubmitHandler} type="primary" size="large">
+          로그인
+        </Button>
+        <br />
+        <Button type="link">
+          <Link to="/register">아직 회원이 아니신가요?</Link>
+        </Button>
       </form>
     </div>
   );

@@ -85,6 +85,31 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
+app.get('/api/users/history', (req, res) => {
+  History.find({ userId: req.user._id }, (err, history) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.status(200).json({
+      success: true,
+      history
+    });
+  });
+});
+
+app.get('/api/rsp/ranking', (req, res) => {
+  User.find()
+    .sort({ point: -1 })
+    .limit(100)
+    .then(rank => {
+      return res.status(200).json({
+        success: true,
+        rank
+      });
+    })
+    .catch(err => {
+      return res.json({ success: false, error: err });
+    });
+});
+
 app.post('/api/rsp/apply', (req, res) => {
   const history = new History(req.body);
   history.save((err, history) => {
