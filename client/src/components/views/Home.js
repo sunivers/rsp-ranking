@@ -4,29 +4,30 @@ import { withRouter } from 'react-router-dom';
 import './Home.css';
 import { Button } from 'antd';
 import { getFormattedToday, getCurrentHour } from '../../utils';
+import { useSelector } from 'react-redux';
 
 function Home(props) {
   const [rsp, setRsp] = useState(-1);
+  const { isAuth, _id } = useSelector(state => state.user.userData || {}, []);
 
   const hour = getCurrentHour(1); // 다음 시간대 참여를 위해 +1 해준다.
   const rspText = ['가위', '바위', '보'];
-  const onSubmitHandler = () => {
-    if (rsp === -1) return alert('가위, 바위, 보 중 하나를 선택해주세요.');
 
+  const onSubmitHandler = () => {
+    if (!isAuth) return alert('로그인 후 참여 가능합니다.');
+    if (rsp === -1) return alert('가위, 바위, 보 중 하나를 선택해주세요.');
     if (!window.confirm(`${rspText[rsp]}로 참여하시겠습니까?`)) return;
 
     const data = {
-      /**
-       * @todo 리덕스 auth 작업 이후 userId 추가하기
-       */
-      // userId,
+      userId: _id,
       rsp,
       date: getFormattedToday(),
-      hour: hour === 24 ? 0 : hour, // hour => 0 - 23
+      hour: hour === 24 ? 0 : hour,
     };
     axios.post('/api/rsp/apply', data).then((res) => {
       if (res.data.success) {
         alert('참여해주셔서 감사합니다! 결과를 기다려주세요.');
+        setRsp(-1);
       } else {
         alert('참여에 실패했습니다.');
       }
