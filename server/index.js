@@ -96,6 +96,9 @@ app.get('/api/users/history', (req, res) => {
 });
 
 app.get('/api/rsp/ranking', (req, res) => {
+  /**
+   * @todo 해당 시간대, 해당 유저 이미 참여기록 있는지 체크
+   */
   User.find()
     .sort({ point: -1 })
     .limit(100)
