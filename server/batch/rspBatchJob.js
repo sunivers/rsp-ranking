@@ -1,13 +1,14 @@
 const schedule = require('node-schedule');
 const { Bot } = require('../models/Bot');
 const { History } = require('../models/History');
+const { User } = require('../models/User');
 const { getFormattedToday, getCurrentHour } = require('../utils/index');
 
 const WIN = 'WIN';
 const LOSE = 'LOSE';
 
-function rspBatchJob() {
-  schedule.scheduleJob('0 * * * * *', function () {
+async function rspBatchJob() {
+  schedule.scheduleJob('0 * * * * *', async function () {
     console.log('bot rock scissors paper!');
     const rsp = Math.floor(Math.random() * 3);
     const date = getFormattedToday();
@@ -33,18 +34,43 @@ function rspBatchJob() {
       }
     ]
 
-    History.updateMany({ hour: 0, rsp: mapRsp[rsp].WIN }, { $set: { state: 'WIN', point: 7 } }, (err, output) => {
-      if (err) {
-        console.log('Update error', err);
-      }
-      console.log('Update success', output);
-    });
-    History.updateMany({ hour: 0, rsp: mapRsp[rsp].LOSE }, { $set: { state: 'LOSE', point: -3 } }, (err, output) => {
-      if (err) {
-        console.log('Update error', err);
-      }
-      console.log('Update success', output);
-    });
+    /**
+     * @description history 데이터 업데이트 / user point 업데이트
+     * 1. 두가지를 순차적으로 실행하는게 효율적일까, 
+     * 2. history 하나씩 찾아서 업데이트 할 때 마다 해당 유저도 하나씩 업데이트 해주는게 효율적일까
+     * 2번째 방법이 한 번이라도 순회를 덜 할거 같다. 낙찰!
+     */
+  
+    try {
+      // 이긴 경우
+      const winHistoryRow = await History.find({ date, hour, rsp: mapRsp[rsp].WIN });
+      console.log('winHistoryRow find success');
+      /**
+       * @todo 연속 승리 콤보 점수 계산
+       */
+      winHistoryRow.forEach(async row => {
+        await row.update({ $set: { state: 'WIN', point: 7 } });
+        console.log('history update success');
+
+        const user = await User.findOne({ _id: row.userId });
+        await user.update({ point: user.point + 7 });
+        console.log('user update success');
+      });
+
+      // 진 경우
+      const loseHistoryRow = await History.find({ date, hour, rsp: mapRsp[rsp].LOSE });
+      console.log('loseHistoryRow find success');
+      loseHistoryRow.forEach(async row => {
+        await row.update({ $set: { state: 'LOSE', point: -3 } });
+        console.log('history update success');
+
+        const user = await User.findOne({ _id: row.userId });
+        await user.update({ point: user.point - 3 });
+        console.log('user update success');
+      });
+    } catch (error) {
+      console.log('history error', error);
+    }
   });
 }
 
