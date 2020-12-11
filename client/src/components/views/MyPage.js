@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 function MyPage(props) {
   const onClickHandler = () => {
@@ -19,4 +20,4 @@ function MyPage(props) {
   );
 }
 
-export default MyPage;
+export default withRouter(MyPage);
