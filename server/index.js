@@ -96,9 +96,6 @@ app.get('/api/users/history', (req, res) => {
 });
 
 app.get('/api/rsp/ranking', (req, res) => {
-  /**
-   * @todo 해당 시간대, 해당 유저 이미 참여기록 있는지 체크
-   */
   User.find()
     .sort({ point: -1 })
     .limit(100)
@@ -114,6 +111,15 @@ app.get('/api/rsp/ranking', (req, res) => {
 });
 
 app.post('/api/rsp/apply', (req, res) => {
+  const { userId, hour, date } = req.body;
+  History.findOne({ userId, hour, date }, (err, history) => {
+    if (history) {
+      return res.json({
+        success: false,
+        code: 'ALREADY_APPLY',
+      });
+    }
+  });
   const history = new History(req.body);
   history.save((err, history) => {
     if (err) return res.json({ success: false, error: err });

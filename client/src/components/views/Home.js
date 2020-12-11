@@ -29,6 +29,10 @@ function Home(props) {
         alert('참여해주셔서 감사합니다! 결과를 기다려주세요.');
         setRsp(-1);
       } else {
+        if (res.data.code === 'ALREADY_APPLY') {
+          alert('이미 참여하셨습니다. 결과를 기다려 주세요!');
+          return;
+        }
         alert('참여에 실패했습니다.');
       }
     });
