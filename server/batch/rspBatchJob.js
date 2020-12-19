@@ -53,7 +53,12 @@ async function rspBatchJob() {
         console.log('history update success');
 
         const user = await User.findOne({ _id: row.userId });
-        await user.update({ point: user.point + 7 });
+        await user.update({
+          point: user.point + 7,
+          totalPoint: user.totalPoint + 7,
+          winCount: user.winCount + 1,
+          totalWinCount: user.totalWinCount + 1
+        });
         console.log('user update success');
       });
 
@@ -65,7 +70,12 @@ async function rspBatchJob() {
         console.log('history update success');
 
         const user = await User.findOne({ _id: row.userId });
-        await user.update({ point: user.point - 3 });
+        await user.update({
+          point: user.point - 3,
+          totalPoint: user.totalPoint - 7,
+          loseCount: user.loseCount + 1,
+          totalLoseCount: user.totalLoseCount + 1
+        });
         console.log('user update success');
       });
     } catch (error) {

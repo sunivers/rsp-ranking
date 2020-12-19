@@ -110,23 +110,24 @@ app.get('/api/rsp/ranking', (req, res) => {
     });
 });
 
-app.post('/api/rsp/apply', (req, res) => {
+app.post('/api/rsp/apply', async (req, res) => {
   const { userId, hour, date } = req.body;
-  History.findOne({ userId, hour, date }, (err, history) => {
-    if (history) {
+  try {
+    const isAlreadyApply = await History.findOne({ userId, hour, date });
+    if (isAlreadyApply) {
       return res.json({
         success: false,
         code: 'ALREADY_APPLY',
       });
     }
-  });
-  const history = new History(req.body);
-  history.save((err, history) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.status(200).json({
-      success: true,
-    });
-  });
+    const history = new History(req.body);
+    await history.save();
+    const user = await User.findOne({ _id: req.body.userId });
+    user.update({ applyCount: user.applyCount + 1, totalApplyCount: user.totalApplyCount + 1 });
+    return res.status(200).send({ success: true });
+  } catch (error) {
+    return res.json({ success: false, error: err });
+  }
 });
 
 // rspBatchJob();

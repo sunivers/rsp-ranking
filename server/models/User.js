@@ -32,6 +32,42 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  applyCount: {
+    type: Number,
+    default: 0,
+  },
+  winCount: {
+    type: Number,
+    default: 0,
+  },
+  loseCount: {
+    type: Number,
+    default: 0,
+  },
+  comboCount: {
+    type: Number,
+    default: 0,
+  },
+  totalPoint: {
+    type: Number,
+    default: 0,
+  },
+  totalApplyCount: {
+    type: Number,
+    default: 0,
+  },
+  totalWinCount: {
+    type: Number,
+    default: 0,
+  },
+  totalLoseCount: {
+    type: Number,
+    default: 0,
+  },
+  totalComboCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.pre('save', function (next) {
