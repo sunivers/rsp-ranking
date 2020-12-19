@@ -8,9 +8,12 @@ import {
   UserOutlined,
   LoginOutlined,
 } from '@ant-design/icons';
+import _trim from 'lodash/trim';
 
 function NavBar() {
-  const [current, setCurrent] = useState('home');
+  const path = _trim(window.location.pathname, '/');
+  const navKey = path || 'home';
+  const [current, setCurrent] = useState(navKey);
   const { isAuth } = useSelector(state => state.user.userData || {}, []);
 
   const onClickHandler = (event) => {

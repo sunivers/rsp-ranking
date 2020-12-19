@@ -7,7 +7,6 @@ function RankingPage() {
   useEffect(() => {
     async function fetchData() {
       const res = await axios.get('/api/rsp/ranking');
-      console.log('ranking', res.data.rank);
       setRanking(res.data.rank);
     }
     fetchData();
