@@ -12,13 +12,15 @@ function App() {
     <Router>
       <div>
         <NavBar />
-        <Switch>
-          <Route exact path="/" component={Auth(Home, null)} />
-          <Route path="/ranking" component={Auth(RankingPage, null)} />
-          <Route path="/my" component={Auth(MyPage, true)} />
-          <Route path="/login" component={Auth(LoginPage, false)} />
-          <Route path="/register" component={Auth(RegisterPage, false)} />
-        </Switch>
+        <div style={{ padding: '0 5vw', height: '100%' }}>
+          <Switch >
+            <Route exact path="/" component={Auth(Home, null)} />
+            <Route path="/ranking" component={Auth(RankingPage, null)} />
+            <Route path="/my" component={Auth(MyPage, true)} />
+            <Route path="/login" component={Auth(LoginPage, false)} />
+            <Route path="/register" component={Auth(RegisterPage, false)} />
+          </Switch>
+        </div>
       </div>
     </Router>
   );

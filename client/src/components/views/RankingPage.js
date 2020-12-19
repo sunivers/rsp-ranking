@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { List } from 'antd';
 
 function RankingPage() {
   const [ranking, setRanking] = useState([]);
@@ -12,13 +13,22 @@ function RankingPage() {
     fetchData();
   }, []);
   
-  const mapToComponent = ranking.map((rank, i) => {
-    return (<li key={i}>{rank.name} | {rank.point}</li>);
-  });
+  // const mapToComponent = ranking.map((rank, i) => {
+  //   return (<li key={i}>{rank.name} | {rank.point}</li>);
+  // });
   return (
-    <ul>
-      {mapToComponent}
-    </ul>
+    <List
+      itemLayout="horizontal"
+      dataSource={ranking}
+      renderItem={item => (
+        <List.Item>
+          <List.Item.Meta
+            title={item.name}
+            description={item.point}
+          />
+        </List.Item>
+      )}
+    />
   );
 }
 
