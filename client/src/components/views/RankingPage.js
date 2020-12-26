@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List } from 'antd';
+import { Table, Space } from 'antd';
+import { TrophyOutlined } from '@ant-design/icons';
 
 function RankingPage() {
   const [ranking, setRanking] = useState([]);
@@ -12,22 +13,37 @@ function RankingPage() {
     fetchData();
   }, []);
   
-  // const mapToComponent = ranking.map((rank, i) => {
-  //   return (<li key={i}>{rank.name} | {rank.point}</li>);
-  // });
+  const columns = [
+    {
+      title: 'RANK',
+      dataIndex: 'rank',
+      key: 'rank',
+      render: (text, record) => {
+        const icon = text === 1 ? <TrophyOutlined /> : '';
+        return (
+          <Space size="middle">
+            <span>{record.rank}</span>
+            {icon}
+          </Space>
+        )
+      },
+    },
+    {
+      title: 'NAME',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'POINT',
+      dataIndex: 'point',
+      key: 'point',
+    },
+  ];
+  
+  const data = ranking.map((r, i) => ({ ...r, rank: i + 1, key: i + 1 }));
+
   return (
-    <List
-      itemLayout="horizontal"
-      dataSource={ranking}
-      renderItem={item => (
-        <List.Item>
-          <List.Item.Meta
-            title={item.name}
-            description={item.point}
-          />
-        </List.Item>
-      )}
-    />
+    <Table columns={columns} dataSource={data} pagination={false} />
   );
 }
 
