@@ -85,13 +85,14 @@ app.get('/api/users/logout', auth, (req, res) => {
   });
 });
 
-app.get('/api/users/history', (req, res) => {
-  History.find({ userId: req.user._id }, (err, history) => {
-    if (err) return res.json({ success: false, error: err });
+app.get('/api/users/history', auth, (req, res) => {
+  History.find({ userId: req.user._id }).limit(100).then(history => {
     return res.status(200).json({
       success: true,
       history
     });
+  }).catch(err => {
+    return res.json({ success: false, error: err });
   });
 });
 
