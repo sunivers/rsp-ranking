@@ -8,7 +8,12 @@ const WIN = 'WIN';
 const LOSE = 'LOSE';
 
 async function rspBatchJob() {
-  schedule.scheduleJob('0 * * * * *', async function () {
+  // 월-토, 매 시, 24시간 진행
+  // TODO: 일요일 저녁 6시에 최종집계 발표
+  const rule = new schedule.RecurrenceRule();
+  rule.dayOfWeek = [new schedule.Range(1, 6)];
+  rule.minute = 0;
+  schedule.scheduleJob(rule, async function () {
     console.log('bot rock scissors paper!');
     const rsp = Math.floor(Math.random() * 3);
     const date = getFormattedToday();

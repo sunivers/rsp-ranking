@@ -131,7 +131,7 @@ app.post('/api/rsp/apply', async (req, res) => {
   }
 });
 
-// rspBatchJob();
+rspBatchJob();
 
 const port = 5000;
 app.listen(port, () => {
